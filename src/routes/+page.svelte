@@ -48,7 +48,6 @@
     }
 
     $: search(), searchQuery, convertFromZone, convertFromTime, currentTime;
-        S
 </script>
 
 <!-- CONVERTED TIME -->
