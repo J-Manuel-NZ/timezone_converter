@@ -51,86 +51,86 @@
 </script>
 
 <!-- CONVERTED TIME -->
-<div class='grid grid-cols-3 w-2/3 py-16 items-start justify-between'>
-    <div class="text-offWhite  flex flex-col items-center gap-4">
-        {#each zones as zone}
-            {#if zone.value === convertToZone}
-                <h2 class=" text-6xl">{zone.label.toUpperCase()}</h2>
-            {/if}
-        {/each}
-        <button class="border border-offWhite rounded-full px-3 py-1 hover:bg-offWhite hover:text-darkGrey transition-all"
-        on:click={() => {showToLocationModal.showModal()}}>
-            <p class=''>CHANGE</p>
-        </button>
-    </div>
-    <div/>
-    <div class="text-offWhite  flex flex-col items-center gap-4">
-        <h2 class=" text-6xl leading-tighter">{convertedTime}</h2>
-    </div>
-
-</div>
-<div class='h-[1px] bg-offWhite w-2/3 opacity-50' />
-
-<!-- TIME -->
-
-<div>
-    <div class=' flex w-full py-16 items-center justify-center'>
-        <div class="text-offWhite  flex flex-col items-center gap-4">
-            <p class=' text-xl'>local time</p>
-            <h2 class=" text-6xl">{currentTime}</h2>
-            <button on:click={() => {showSetTimeModal.showModal();}} 
-            class="border border-offWhite rounded-full px-8 py-1 hover:bg-offWhite hover:text-darkGrey transition-all">
-                <p class=''>SET</p>
+<div class='h-1/2 w-full flex p-8 items-center justify-center'>
+    <div class='w-full flex flex-col-reverse items-center xs:items-start xs:flex-row gap-12 xs:gap-0'>
+        <div class="text-offWhite text-center w-full xs:w-1/2 flex flex-col items-center gap-4">
+            {#each zones as zone}
+                {#if zone.value === convertToZone}
+                    <h2 class="text-3xl md:text-6xl">{zone.label.toUpperCase()}</h2>
+                {/if}
+            {/each}
+            <button class="border border-offWhite rounded-full px-3 py-1 hover:bg-offWhite hover:text-darkGrey transition-all"
+            on:click={() => {showToLocationModal.showModal()}}>
+                <p class='text-sm md:text-base'>CHANGE</p>
             </button>
         </div>
+        <div class="text-offWhite w-full xs:w-1/2 flex flex-col items-center gap-4 text-center">
+            <h2 class="text-3xl md:text-6xl leading-tighter">{convertedTime}</h2>
+        </div>
     </div>
+
 </div>
+<!-- <div class='h-[1px] bg-offWhite w-2/3 opacity-50' /> -->
+
 
 <!-- CURRENT LOCATION -->
-<div class='bg-offWhite flex w-full py-16 items-center justify-center'>
-    <div class="text-darkGrey  flex flex-col items-center gap-4">
-        <p class=' text-xl'>current location</p>
+<div class='bg-offWhite flex flex-col-reverse gap-12 xs:flex-row xs:gap-0 w-full h-1/2  items-center p-8 justify-center'>
+    <!-- LOCATION -->
+    <div class="text-darkGrey w-full xs:w-1/2 flex flex-col items-center gap-4">
+        <p class='text-base md:text-xl'>current location</p>
         {#each zones as zone}
             {#if zone.value === convertFromZone}
-                <h2 class=" text-6xl">{zone.label.toUpperCase()}</h2>
+                <h2 class="text-3xl md:text-6xl">{zone.label.toUpperCase()}</h2>
             {/if}
         {/each}
         <button on:click={() => {showCurrentLocationModal.showModal();}} 
             class="border border-darkGrey rounded-full px-3 py-1 hover:bg-darkGrey hover:text-offWhite transition-all">
-            <p class=''>CHANGE</p>
+            <p class='text-sm md:text-base'>CHANGE</p>
         </button>
     </div>
+    
+    <!-- TIME -->
+        <div class=' flex items-center w-full xs:w-1/2 justify-center'>
+            <div class="text-darkGrey  flex flex-col items-center gap-4 text-center">
+                <p class='text-base md:text-xl'>local time</p>
+                <h2 class="text-3xl md:text-6xl">{currentTime}</h2>
+                <button on:click={() => {showSetTimeModal.showModal();}} 
+                class="border border-darkGrey rounded-full px-8 py-1 hover:bg-darkGrey hover:text-offWhite transition-all">
+                    <p class='text-sm md:text-base'>SET</p>
+                </button>
+            </div>
+        </div>
 </div>
 
 <!-- Current Location Modal -->
 
 <dialog data-modal
 	bind:this={showCurrentLocationModal}
-	class="backdrop-blur-lg w-4/5 h-4/5 p-40 bg-transparent ">
+	class="backdrop-blur-lg w-full rounded-md md:w-4/5 h-4/5 p-2 md:p-40 bg-darkGrey/60"
+>
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div class="flex flex-col h-full items-center gap-12 text-offWhite">
-    <h2 class="text-6xl">
+    <h2 class="text-3xl md:text-6xl">
         SELECT LOCATION
     </h2>
-		<hr />
-		<div class="w-full">
-            <div class="w-full my-4">
+		<div class="h-full w-full my-4 overflow-y-hidden">
+            <div class="w-full">
                 <input 
                     class="bg-transparent w-full text-offWhite text-xl border-none" 
                     type="text" id="search" placeholder="search by city..." bind:value={searchQuery} />
                     <div class="h-[1px] bg-offWhite opacity-50 mt-1 mb-5"/>
             </div>
-            <div class="flex flex-wrap gap-2">
+            <div class="flex overflow-y-auto justify-start flex-wrap gap-2" style="max-height: calc(100% - 100px);">
                 {#each searchResults as zone}
                 <div class="border border-offWhite rounded-full px-3 py-1 hover:bg-offWhite hover:text-darkGrey transition-all 
-                {(zone.value === convertFromZone) ? "bg-offWhite text-darkGrey " : "" }">
+                {(zone.value === convertFromZone) ? 'bg-offWhite text-darkGrey' : '' }">
                     <button on:click={() => {convertFromZone = zone.value, convertTime();}}>{zone.label.toUpperCase()}</button>
                 </div>
                 {/each}
             </div>
         </div>
-		<hr />
 		<!-- svelte-ignore a11y-autofocus -->
-		<button class="absolute bottom-20 px-3 py-1 border border-darkGrey rounded-full bg-darkGrey hover:bg-offWhite hover:text-darkGrey transition-all" 
+		<button class="absolute bottom-4 px-3 py-1 border border-darkGrey rounded-full bg-darkGrey hover:bg-offWhite hover:text-darkGrey transition-all" 
         autofocus on:click={() => showCurrentLocationModal.close()}>SAVE</button>
 	</div>
 </dialog>
@@ -139,22 +139,21 @@
 
 <dialog data-modal
 	bind:this={showToLocationModal}
-	class="backdrop-blur-lg w-4/5 h-4/5 p-40 bg-transparent "
+	class="backdrop-blur-lg w-full md:w-4/5 h-4/5 rounded-md p-2 md:p-40 bg-darkGrey/60 "
 >
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div class="flex flex-col h-full items-center gap-12 text-offWhite">
-    <h2 class="text-6xl">
+    <h2 class="text-3xl md:text-6xl">
         SELECT TO LOCATION
     </h2>
-		<hr />
-		<div class="w-full">
-            <div class="w-full my-4">
+		<div class="h-full w-full my-4 overflow-y-hidden">
+            <div class="w-full">
                 <input 
                     class="bg-transparent w-full text-offWhite text-xl border-none" 
                     type="text" id="search" placeholder="search by city..." bind:value={searchQuery} />
                     <div class="h-[1px] bg-offWhite opacity-50 mt-1 mb-5"/>
             </div>
-            <div class="flex flex-wrap gap-2">
+            <div class="flex overflow-y-auto justify-start flex-wrap gap-2" style="max-height: calc(100% - 100px);">
                 {#each searchResults as zone}
                 <div class="border border-offWhite rounded-full px-3 py-1 hover:bg-offWhite hover:text-darkGrey transition-all 
                 {(zone.value === convertToZone) ? "bg-offWhite text-darkGrey " : "" }">
@@ -163,9 +162,8 @@
                 {/each}
             </div>
         </div>
-		<hr />
 		<!-- svelte-ignore a11y-autofocus -->
-		<button class="absolute bottom-20 px-3 py-1 border border-darkGrey rounded-full bg-darkGrey hover:bg-offWhite hover:text-darkGrey transition-all" autofocus on:click={() => showToLocationModal.close()}>SAVE</button>
+		<button class="absolute bottom-4 px-3 py-1 border border-darkGrey rounded-full bg-darkGrey hover:bg-offWhite hover:text-darkGrey transition-all" autofocus on:click={() => showToLocationModal.close()}>SAVE</button>
 	</div>
 </dialog>
 
@@ -173,25 +171,22 @@
 
 <dialog data-modal
 	bind:this={showSetTimeModal}
-	class="backdrop-blur-lg w-4/5 h-4/5 p-40 bg-transparent "
+	class="backdrop-blur-lg w-full rounded-md md:w-4/5 h-4/5 p-2 md:p-40 bg-darkGrey/60"
 >
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div class="flex flex-col h-full items-center gap-12 text-offWhite">
-    <h2 class="text-6xl">
+    <h2 class="text-3xl md:text-6xl">
         SET TIME
     </h2>
-		<hr />
-	<!-- set time -->
-        <div class="w-full">
-            <div class="w-full my-4">
+		<div class="h-full w-full my-4 overflow-y-hidden">
+            <div class="w-full">
                 <input 
                     class="bg-transparent w-full text-offWhite text-xl border-none" 
                     type="datetime-local" id="search" bind:value={convertFromTime} on:change={convertTime} />
                     <div class="h-[1px] bg-offWhite opacity-50 mt-1 mb-5"/>
             </div>
         </div>
-		<hr />
 		<!-- svelte-ignore a11y-autofocus -->
-		<button class="absolute bottom-20 px-3 py-1 border border-darkGrey rounded-full bg-darkGrey hover:bg-offWhite hover:text-darkGrey transition-all" autofocus on:click={() => showSetTimeModal.close()}>SAVE</button>
+		<button class="absolute bottom-4 px-3 py-1 border border-darkGrey rounded-full bg-darkGrey hover:bg-offWhite hover:text-darkGrey transition-all" autofocus on:click={() => showSetTimeModal.close()}>SAVE</button>
 	</div>
 </dialog>
