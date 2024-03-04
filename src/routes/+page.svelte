@@ -131,7 +131,7 @@
         </div>
 		<!-- svelte-ignore a11y-autofocus -->
 		<button class="absolute bottom-4 px-3 py-1 border border-darkGrey rounded-full bg-darkGrey hover:bg-offWhite hover:text-darkGrey transition-all" 
-        autofocus on:click={() => showCurrentLocationModal.close()}>SAVE</button>
+        autofocus on:click={() => {showCurrentLocationModal.close(); searchQuery = ''}}>SAVE</button>
 	</div>
 </dialog>
 
@@ -163,7 +163,7 @@
             </div>
         </div>
 		<!-- svelte-ignore a11y-autofocus -->
-		<button class="absolute bottom-4 px-3 py-1 border border-darkGrey rounded-full bg-darkGrey hover:bg-offWhite hover:text-darkGrey transition-all" autofocus on:click={() => showToLocationModal.close()}>SAVE</button>
+		<button class="absolute bottom-4 px-3 py-1 border border-darkGrey rounded-full bg-darkGrey hover:bg-offWhite hover:text-darkGrey transition-all" autofocus on:click={() => {showToLocationModal.close(); searchQuery = '';}}>SAVE</button>
 	</div>
 </dialog>
 
